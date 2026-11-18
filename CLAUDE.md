@@ -6,6 +6,7 @@ plataforma. Mobile (adotante) + web (adotante, ONG e admin).
 
 - Plano completo (doc vivo): https://claude.ai/artifact/JYvjmQTs474FCXi6pCnGjB
 - Protótipo de telas (canvas): https://claude.ai/artifact/G6SqL67ZWZ4opptb86oM4s
+- **Revisão completa e plano para o produto pronto (18/11, fases A–D — seguir este):** https://claude.ai/artifact/KGv4duQdNFVv2iTXBB6gWP
 
 ## Decisões já tomadas (não reabrir sem o dono pedir)
 
