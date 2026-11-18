@@ -103,7 +103,10 @@ Legenda: [x] feito · [~] em andamento · [ ] a fazer · 🔒 precisa do dono
 - [x] Web: painel da ONG — visão geral, animais (criar/editar/fotos), candidatos, aprovar/recusar, confirmar adoção, pós-adoção, dados da ONG
 - [x] Web: chat em tempo real (respostas rápidas, proposta de visita, confirmação)
 - [x] Web: meus pedidos (cancelar, responder check-in), favoritos, perfil, exclusão de conta
-- [x] Web: admin (verificar ONG, denúncias), cadastro de ONG (/sou-ong), privacidade e termo (rascunhos)
+- [x] Web: admin completo em /admin — visão geral (KPIs, "precisa de atenção", funil, 12 semanas, saúde das ONGs),
+      ONGs (verificar), animais (arquivar), usuários (e-mail, papel; sem CPF), pedidos, adoções/check-ins, denúncias
+      (funções `admin_*` na migration 05)
+- [x] Web: admin antigo (verificar ONG, denúncias), cadastro de ONG (/sou-ong), privacidade e termo (rascunhos)
 - [x] Mobile (v1): busca (filtros, localização), animal, favoritos, chat realtime, perfil + pedidos, login, cadastro, completar perfil
       (tsc + expo lint ok; `expo export --platform android` compila). **Falta testar em aparelho** (Expo Go).
 - [ ] Mobile: mapa (MapLibre RN exige development build), push, responder check-in, propor/confirmar visita já funciona
@@ -164,4 +167,6 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
   Repositório: https://github.com/Gustavo-Patrocinio/pet-app (push autorizado pelo dono).
 - Web em produção: https://adotaiapp.vercel.app (Vercel, deploy automático no push da `main`; envs NEXT_PUBLIC_* configuradas lá).
   Atenção: `npm run build:web` local usa `.env.production.local` (banco de PRODUÇÃO); para testar contra o banco local use `npm run dev:web`.
+- Produção tem a "ONG Exemplo Adotaí" (slug ong-exemplo, login ong-exemplo@adotai.dev) com 8 animais de exemplo — `supabase/demo.sql`.
+  Para virar admin: a pessoa cria conta no site e roda-se `update public.profiles set role='admin' where id=(select id from auth.users where email='...')`.
 - 2026-11-18: banco de produção no ar (4 migrations aplicadas, API testada com a publishable key).
