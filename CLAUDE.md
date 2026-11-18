@@ -162,4 +162,6 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
   completo recebe PROFILE_INCOMPLETE; ONG só recebe contato após aprovar; ONG2 não vê pedidos da ONG1;
   usuário não consegue trocar o próprio papel. README com capturas geradas por scripts/screenshots.mjs.
   Repositório: https://github.com/Gustavo-Patrocinio/pet-app (push autorizado pelo dono).
+- Web em produção: https://adotaiapp.vercel.app (Vercel, deploy automático no push da `main`; envs NEXT_PUBLIC_* configuradas lá).
+  Atenção: `npm run build:web` local usa `.env.production.local` (banco de PRODUÇÃO); para testar contra o banco local use `npm run dev:web`.
 - 2026-11-18: banco de produção no ar (4 migrations aplicadas, API testada com a publishable key).
