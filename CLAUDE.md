@@ -130,6 +130,17 @@ check-ins 90/180, carteira de saúde com lembretes.
 ### Fase 3
 Relatórios para ONGs, doações via Pix, equipe com papéis, moderação automática, app da ONG.
 
+## Avisos, e-mail e tarefas automáticas
+
+- Tabela `notifications` alimentada por gatilhos (pedido novo, status, mensagem, visita, adoção, check-in). Sininho no cabeçalho + `/notificacoes`.
+- E-mail: gatilho chama `POST /api/notifications/email` via pg_net, que envia pelo Resend. **Desligado** até: `private.settings`
+  (`site_url`, `notify_secret`) no banco + `NOTIFY_SECRET`, `RESEND_API_KEY` e `EMAIL_FROM` na Vercel (migration 11).
+- `pg_cron`: job `adotai-daily` às 09:00 UTC chama `run_daily_jobs()` (check-ins atrasados, aviso de check-in, notas).
+- Segurança (migration 10): tipos de mensagem restritos, foto presa à pasta da conversa, só quem recebeu confirma visita,
+  limite de 30 mensagens/min e 5 pedidos/dia, buckets com 8 MB e só imagens. Cabeçalhos de segurança no `next.config`.
+- Divulgação: `/animais/[id]/opengraph-image` (prévia de link) e `/api/card/[id]?formato=feed|story|og&baixar=1`;
+  kit Divulgar no painel do animal; botões de compartilhar na página do animal.
+
 ## Idiomas (web)
 
 - PT (padrão) e EN. Seletor PT | EN no rodapé e no perfil; a escolha fica no cookie `lang`.
