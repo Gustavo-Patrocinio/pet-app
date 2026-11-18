@@ -93,7 +93,9 @@ Legenda: [x] feito · [~] em andamento · [ ] a fazer · 🔒 precisa do dono
 - [x] Migrations: schema, PostGIS, índices, RLS, funções (busca por raio, pedidos, contato pós-aprovação, ranking, LGPD)
 - [x] Seed com dados fictícios de Ribeirão Preto (usuários de teste, senha `adotai123`)
 - [x] Testes de RLS/privacidade rodados no banco local (ver log)
-- [ ] 🔒 Criar projeto no Supabase (conta do dono), `supabase link` + `supabase db push`, preencher `.env`
+- [x] Projeto Supabase de produção criado pelo dono: ref `noeuygatrerbsbcnhpek`, região São Paulo (sa-east-1).
+      Migrations aplicadas (sem seed). Envs: `.env` (ref + senha, CLI), `apps/web/.env.production.local`, `apps/mobile/.env.production`.
+      Push sem login: `npx supabase db push --db-url postgresql://postgres.<ref>:<senha-urlencoded>@aws-0-sa-east-1.pooler.supabase.com:5432/postgres`
 
 ### Fase 1 — MVP (~3 meses)
 - [x] Web: busca (lista + mapa MapLibre/OpenFreeMap + filtros + ordenação + paginação), página do animal, página da ONG, lista de ONGs
@@ -145,7 +147,7 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
 
 ## O que depende do dono (🔒)
 
-1. Criar conta/projeto no Supabase (gratuito) e passar URL + anon key (e rodar `supabase link`).
+1. ~~Projeto Supabase~~ feito. Falta: configurar Auth no painel (Site URL / redirect URLs do domínio, confirmação de e-mail).
 2. Escolher provedor de SMS para produção (é pago por mensagem).
 3. Revisão jurídica: Política de Privacidade, Termo de adoção, e-mail do encarregado de dados (LGPD).
 4. Deploy da web (sugestão: Vercel, plano gratuito) — precisa da conta dele.
@@ -160,3 +162,4 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
   completo recebe PROFILE_INCOMPLETE; ONG só recebe contato após aprovar; ONG2 não vê pedidos da ONG1;
   usuário não consegue trocar o próprio papel. README com capturas geradas por scripts/screenshots.mjs.
   Repositório: https://github.com/Gustavo-Patrocinio/pet-app (push autorizado pelo dono).
+- 2026-11-18: banco de produção no ar (4 migrations aplicadas, API testada com a publishable key).
