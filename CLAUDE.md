@@ -129,6 +129,17 @@ check-ins 90/180, carteira de saúde com lembretes.
 ### Fase 3
 Relatórios para ONGs, doações via Pix, equipe com papéis, moderação automática, app da ONG.
 
+## Idiomas (web)
+
+- PT (padrão) e EN. Seletor PT | EN no rodapé e no perfil; a escolha fica no cookie `lang`.
+- Chave = texto em português: `t('Criar conta')`. Server Components: `const { t, lang, locale } = await getI18n()`
+  (`@/i18n/server`); Client: `useI18n()` (`@/i18n/client`). Títulos: `export const generateMetadata = pageTitle('...')`.
+- Dicionário em `apps/web/src/i18n/en.ts`; sem tradução, aparece o português. Rótulos de `packages/shared` passam por `t()`;
+  `formatAge/formatRating/formatDistance` recebem `lang`. Datas: `toLocaleDateString(locale)`.
+- Mensagens de erro ficam em PT no código e são traduzidas na exibição (`{t(error)}`).
+- Ao criar texto novo: envolver em `t()`, adicionar em `en.ts` e rodar `python scripts/i18n-check.py` (deve dar 0 faltando).
+- Privacidade e Termo têm versão EN completa (tradução de cortesia; vale a PT). O app mobile ainda é só PT.
+
 ## Comandos
 
 ```bash
