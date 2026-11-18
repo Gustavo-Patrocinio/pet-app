@@ -167,6 +167,9 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
   Repositório: https://github.com/Gustavo-Patrocinio/pet-app (push autorizado pelo dono).
 - Web em produção: https://adotaiapp.vercel.app (Vercel, deploy automático no push da `main`; envs NEXT_PUBLIC_* configuradas lá).
   Atenção: `npm run build:web` local usa `.env.production.local` (banco de PRODUÇÃO); para testar contra o banco local use `npm run dev:web`.
+- Produção tem contas fictícias de demonstração (`supabase/demo-contas.sql`): ong-demo@adotai.dev (ONG "Amigos de Quatro Patas", 8 animais)
+  e adotante-demo@adotai.dev (Juliana Martins: adoção concluída do Bidu com check-ins e avaliação, pedido da Kiara com visita, conversas, favoritos).
+  Mesma senha da ONG Exemplo (guardada só localmente). Remover antes do lançamento.
 - Produção tem a "ONG Exemplo Adotaí" (slug ong-exemplo, login ong-exemplo@adotai.dev) com 8 animais de exemplo — `supabase/demo.sql`.
   Para virar admin: a pessoa cria conta no site e roda-se `update public.profiles set role='admin' where id=(select id from auth.users where email='...')`.
 - 2026-11-18: banco de produção no ar (4 migrations aplicadas, API testada com a publishable key).
