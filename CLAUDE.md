@@ -32,9 +32,9 @@ plataforma. Mobile (adotante) + web (adotante, ONG e admin).
      cidade/UF/bairro via ViaCEP, endereço (rua e número) e complemento digitados, perfil de moradia.
      Só com a etapa 2 completa o botão **"Quero adotar"** envia pedido. Se incompleto, abre a tela de
      completar perfil e depois volta direto ao pedido daquele animal.
-2. **Privacidade do adotante.** A ONG NUNCA vê o número do CPF — só "CPF verificado". Celular e
-   endereço completo só ficam visíveis para a ONG depois que ela **aprova** o pedido. Antes disso,
-   só bairro + distância. CPF único por conta.
+2. **Privacidade do adotante.** A ONG NUNCA vê o número do CPF — só "CPF verificado". O **celular** aparece
+   para a ONG já no pedido (decisão do dono, 18/11). O **endereço completo** só depois que ela **aprova**;
+   antes disso, só bairro + distância. CPF único por conta. Motivo de recusa é opcional.
 3. **Chat sempre ligado a um animal.** Quem inicia é o adotante. ONG não inicia conversa com quem não
    demonstrou interesse. Chat tem card do animal + status do pedido no topo, proposta de visita,
    denunciar/bloquear. A mesma conversa continua no pós-adoção.
