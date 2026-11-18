@@ -117,7 +117,8 @@ Legenda: [x] feito · [~] em andamento · [ ] a fazer · 🔒 precisa do dono
 - [ ] Denunciar/bloquear na interface do chat (tabela `reports` e coluna `blocked_at` já existem)
 - [ ] Testes E2E (Playwright) dos fluxos principais
 - [ ] 🔒 Revisão jurídica da Política de Privacidade e do Termo de adoção (rascunhos em /privacidade e /termo-de-adocao)
-- [ ] 🔒 Provedor de SMS em produção (Twilio, MessageBird ou Vonage — configurar no Supabase Auth)
+- [x] Decisão do dono: SEM provedor de SMS. Celular só é validado (formato BR: DDD + 9 dígitos começando com 9) — migration 07.
+      ONG vê "CPF verificado · celular informado". phone_verified_at fica para quando houver SMS.
 - [x] ~~Chave de mapas~~ — decidido: mapa gratuito (MapLibre + OpenFreeMap), sem chave
 - [ ] Critério para avançar: 5 ONGs ativas em Ribeirão Preto e 30 adoções registradas
 
@@ -151,7 +152,8 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
 ## O que depende do dono (🔒)
 
 1. ~~Projeto Supabase~~ feito. Falta: configurar Auth no painel (Site URL / redirect URLs do domínio, confirmação de e-mail).
-2. Escolher provedor de SMS para produção (é pago por mensagem).
+2. ~~SMS~~ decidido: sem SMS, só validação do número.
+   E-mail: colar `supabase/templates/confirmacao.html` em Authentication → Emails → Confirm signup; configurar SMTP próprio (Resend) antes de abrir ao público.
 3. Revisão jurídica: Política de Privacidade, Termo de adoção, e-mail do encarregado de dados (LGPD).
 4. Deploy da web (sugestão: Vercel, plano gratuito) — precisa da conta dele.
 5. Contas de loja (Google Play US$ 25 único; Apple US$ 99/ano) quando o app mobile estiver pronto.
