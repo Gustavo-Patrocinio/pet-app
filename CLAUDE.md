@@ -102,7 +102,11 @@ Legenda: [x] feito · [~] em andamento · [ ] a fazer · 🔒 precisa do dono
 - [x] Web: chat em tempo real (respostas rápidas, proposta de visita, confirmação)
 - [x] Web: meus pedidos (cancelar, responder check-in), favoritos, perfil, exclusão de conta
 - [x] Web: admin (verificar ONG, denúncias), cadastro de ONG (/sou-ong), privacidade e termo (rascunhos)
-- [ ] Mobile: busca, animal, favoritos, completar perfil, pedido, chat, perfil — **próximo passo**
+- [x] Mobile (v1): busca (filtros, localização), animal, favoritos, chat realtime, perfil + pedidos, login, cadastro, completar perfil
+      (tsc + expo lint ok; `expo export --platform android` compila). **Falta testar em aparelho** (Expo Go).
+- [ ] Mobile: mapa (MapLibre RN exige development build), push, responder check-in, propor/confirmar visita já funciona
+- [ ] Problema conhecido: no alvo **web** do Expo as abas quebram ("array of styles to a child of <Slot>",
+      expo-router SDK 58). Por isso `platforms: ["ios","android"]` no app.json; a web é o Next.js.
 - [ ] `pg_cron` chamando `run_daily_jobs()` (check-ins atrasados + recálculo de notas) — no projeto de produção
 - [ ] Notificações: push (Expo) e e-mail (mensagem nova, check-in, pedido)
 - [ ] Denunciar/bloquear na interface do chat (tabela `reports` e coluna `blocked_at` já existem)
