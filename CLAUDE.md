@@ -188,6 +188,15 @@ Relatórios para ONGs, doações via Pix, equipe com papéis, moderação autom�
 - LGPD: /termos (rascunho), "Baixar meus dados" (`/api/meus-dados`, JSON pela sessão do usuário), aviso de cookies essenciais,
   Política de Privacidade atualizada (celular visível no pedido, lar temporário, cookies, download).
 
+## Qualidade, PWA e admin
+
+- CI (`.github/workflows/ci.yml`): tipos, lint, testes do shared, traduções; depois sobe Supabase local (migrations + seed), build e
+  Playwright (`e2e/`: visitante, ciclo completo ONG→adotante→aprovação→adoção→termo, perfil incompleto, CSV do admin). Sem segredos.
+- Os testes E2E criam dados no banco local (animais "E2E …"); `npm run db:reset` limpa.
+- PWA: `app/manifest.ts` + ícones gerados em `/pwa-icon/192|512|maskable` (sem service worker; instalável no Android/Chrome e iOS).
+- Admin: botão "Exportar CSV" em pedidos, adoções, usuários, animais e ONGs (`/api/admin/export/<tipo>`; `;` + BOM para o Excel;
+  sem CPF, celular nem endereço; protege contra fórmula injetada).
+
 ## Plano noturno (19/11) — executar em ordem, um commit por bloco
 
 Regra de cada bloco: implementar → `tsc`/lint/i18n-check/build → testar no banco local → commit + push → migration em prod (scratchpad push.py).
@@ -202,9 +211,9 @@ Sem nada pago, sem conta nova, sem apagar dados de demonstração, sem mexer em 
 7. [x] Recusado → animais parecidos; "Finais felizes" na página da ONG
 8. [x] Compatibilidade adotante × animal no anúncio
 9. [x] LGPD: Termos de Uso (rascunho), baixar meus dados (JSON), aviso de cookies essenciais
-10. [ ] CI no GitHub (tipos, lint, testes, traduções, build) + testes E2E (Playwright) dos fluxos principais
-11. [ ] PWA instalável (manifest + ícones)
-12. [ ] Admin: exportar CSV
+10. [x] CI no GitHub (tipos, lint, testes, traduções, build) + testes E2E (Playwright) dos fluxos principais
+11. [x] PWA instalável (manifest + ícones)
+12. [x] Admin: exportar CSV
 13. [x] (pesquisa de concorrentes) Compromisso de guarda responsável marcado antes de enviar o pedido
 14. [x] Selo/ordem "esperando há mais tempo" para animais parados (idosos, adultos)
 15. [x] Perguntas extras da ONG no pedido (até 5)
@@ -233,6 +242,8 @@ npm run db:types           # regenera packages/shared/src/database.types.ts — 
 npm run dev:web            # http://localhost:3000
 npm run build:web && npm run lint:web
 node --test packages/shared/src/shared.test.ts
+python scripts/i18n-check.py              # 0 faltando (sai com erro se faltar: trava o CI)
+npx playwright test                       # E2E contra o banco local (site rodando em :3000; usa o Chrome instalado)
 node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em :3000)
 ```
 
