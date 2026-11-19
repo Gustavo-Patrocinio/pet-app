@@ -150,6 +150,44 @@ Relatórios para ONGs, doações via Pix, equipe com papéis, moderação autom�
   e `/admin/usuarios/[id]` (ficha da pessoa via `admin_user_detail`, sem CPF).
 - Compartilhar manda só o link; a prévia com foto vem do `opengraph-image`.
 
+## Pós-adoção, denúncias e bloqueio (migration 13)
+
+- Adotante (Meus pedidos): etapas do pedido + próximo passo + histórico; aceite do termo ("Li e aceito" → `accept_adoption_term`,
+  avisa a ONG); cópia para imprimir/PDF em `/meus-pedidos/termo/[id]` (adotante ou ONG); avaliação da ONG (1–5) liberada após o
+  check-in de 30 dias ou 30 dias de adoção (`review_ngo`, uma por adoção, recalcula a nota); check-in com até 3 fotos
+  (`checkin-photos/<adotante>/<adoção>/…`, o banco confere o caminho).
+- ONG (Pós-adoção): filtro "Precisam de atenção", termo/avaliação/fotos do check-in (links assinados) e "Registrar devolução"
+  (`register_return(id, motivo, relist)`: motivo obrigatório, anúncio volta como rascunho ou direto para a vitrine, check-ins pendentes apagados).
+- Adoção agenda check-ins de 7, 30, 90 e 180 dias (o painel passa `p_checkin_days`).
+- Denunciar: `ReportButton` (anúncio, ONG, avaliação, conversa) grava em `reports`; uma denúncia aberta por alvo, 10/dia, admin recebe aviso.
+- Bloquear na conversa: `conversations.blocked_by`; só quem bloqueou (ou admin) desbloqueia (gatilho `guard_conversation_block`).
+- Fotos são comprimidas no navegador antes do envio (`lib/image.ts`: máx. 1600 px, WebP) — anúncio, carteirinha (2000 px), chat, check-in.
+- Avisos novos (`notifications.kind`): term_accepted, review, report, foster, event.
+
+## Plano noturno (19/11) — executar em ordem, um commit por bloco
+
+Regra de cada bloco: implementar → `tsc`/lint/i18n-check/build → testar no banco local → commit + push → migration em prod (scratchpad push.py).
+Sem nada pago, sem conta nova, sem apagar dados de demonstração, sem mexer em Auth/SMTP do painel.
+
+1. [x] Pós-adoção completo: aceite digital do termo (adotante), avaliação da ONG (após check-in de 30 dias), registrar devolução (ONG), check-ins 90/180 com foto
+2. [x] Denunciar (anúncio, ONG, conversa) e bloquear na conversa
+3. [x] Linha do tempo do pedido em Meus pedidos (eventos + próximo passo)
+4. [ ] SEO: sitemap.xml, robots.txt, dados estruturados, páginas "adotar cachorro/gato em Ribeirão Preto"
+5. [ ] Fotos comprimidas no envio (máx. 1600 px, WebP) — anúncio, carteirinha, chat, check-in
+6. [ ] ONG: filtro "esperando minha resposta", checklist de primeiro acesso, duplicar animal
+7. [ ] Recusado → animais parecidos; "Finais felizes" na página da ONG
+8. [ ] Compatibilidade adotante × animal no anúncio
+9. [ ] LGPD: Termos de Uso (rascunho), baixar meus dados (JSON), aviso de cookies essenciais
+10. [ ] CI no GitHub (tipos, lint, testes, traduções, build) + testes E2E (Playwright) dos fluxos principais
+11. [ ] PWA instalável (manifest + ícones)
+12. [ ] Admin: exportar CSV
+13. [ ] (pesquisa de concorrentes) Compromisso de guarda responsável marcado antes de enviar o pedido
+14. [ ] Selo/ordem "esperando há mais tempo" para animais parados (idosos, adultos)
+15. [ ] Perguntas extras da ONG no pedido (até 5)
+16. [ ] Feiras de adoção: ONG cadastra evento (data, local, animais); aparece na busca e na página da ONG
+17. [ ] Lar temporário: pessoa se oferece; ONG vê a lista na região
+18. [ ] Doação por Pix direto para a ONG (chave + QR gerado no site, sem intermediário)
+
 ## Idiomas (web)
 
 - PT (padrão) e EN. Seletor PT | EN no rodapé e no perfil; a escolha fica no cookie `lang`.
