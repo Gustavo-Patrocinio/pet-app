@@ -29,7 +29,7 @@ plataforma. Mobile (adotante) + web (adotante, ONG e admin).
 1. **Cadastro em duas etapas.**
    - Etapa 1 (criar conta): nome completo, e-mail, senha (ou Google/Apple). Libera: buscar, ver,
      favoritar, buscas salvas, conversar com ONG.
-   - Etapa 2 (completar perfil): celular (verificado por SMS), CPF (validado), CEP → preenche
+   - Etapa 2 (completar perfil): celular (formato validado, sem SMS — decisão do dono), CPF (validado), CEP → preenche
      cidade/UF/bairro via ViaCEP, endereço (rua e número) e complemento digitados, perfil de moradia.
      Só com a etapa 2 completa o botão **"Quero adotar"** envia pedido. Se incompleto, abre a tela de
      completar perfil e depois volta direto ao pedido daquele animal.
@@ -72,10 +72,10 @@ app-pet/
 
 `profiles` (1:1 auth.users, role adopter|ngo_member|admin, dados da etapa 2) ·
 `ngos` (CNPJ, verified, location geography, rating) · `ngo_members` ·
-`animals` (species dog|cat, size, age, sex, saúde, compatibilidades, status, location) ·
+`animals` (species dog|cat|other, code, size, age, sex, saúde, compatibilidades, carteirinha, status, location) ·
 `animal_photos` · `adoption_requests` (status: sent→reviewing→visit→approved|rejected) ·
 `conversations` (adopter + ngo + animal) · `messages` · `adoptions` · `checkins` · `reviews` ·
-`favorites` · `saved_searches`.
+`favorites` · `saved_searches` · `notifications` · `reports` · `adoption_request_events` · `ngo_events` · `foster_offers`.
 
 ## Design (do protótipo)
 
@@ -113,10 +113,10 @@ Legenda: [x] feito · [~] em andamento · [ ] a fazer · 🔒 precisa do dono
 - [ ] Mobile: mapa (MapLibre RN exige development build), push, responder check-in, propor/confirmar visita já funciona
 - [ ] Problema conhecido: no alvo **web** do Expo as abas quebram ("array of styles to a child of <Slot>",
       expo-router SDK 58). Por isso `platforms: ["ios","android"]` no app.json; a web é o Next.js.
-- [ ] `pg_cron` chamando `run_daily_jobs()` (check-ins atrasados + recálculo de notas) — no projeto de produção
-- [ ] Notificações: push (Expo) e e-mail (mensagem nova, check-in, pedido)
-- [ ] Denunciar/bloquear na interface do chat (tabela `reports` e coluna `blocked_at` já existem)
-- [ ] Testes E2E (Playwright) dos fluxos principais
+- [x] `pg_cron` chamando `run_daily_jobs()` (check-ins atrasados + recálculo de notas) — migration 10/11
+- [~] Notificações: avisos no site feitos; e-mail pronto mas desligado até 🔒 domínio + Resend; push (Expo) a fazer
+- [x] Denunciar (anúncio, ONG, avaliação, conversa) e bloquear na conversa — migration 13
+- [x] Testes E2E (Playwright) dos fluxos principais + CI no GitHub
 - [ ] 🔒 Revisão jurídica da Política de Privacidade e do Termo de adoção (rascunhos em /privacidade e /termo-de-adocao)
 - [x] Decisão do dono: SEM provedor de SMS. Celular só é validado (formato BR: DDD + 9 dígitos começando com 9) — migration 07.
       ONG vê "CPF verificado · celular informado". phone_verified_at fica para quando houver SMS.
