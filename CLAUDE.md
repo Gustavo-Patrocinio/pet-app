@@ -13,7 +13,7 @@ plataforma. Mobile (adotante) + web (adotante, ONG e admin).
 | Tema | Decisão |
 | --- | --- |
 | Formato | Classificados: lista + mapa + filtros. Nada de swipe/"Tinder" |
-| Espécies | Só cães e gatos |
+| Espécies | Cães, gatos e "outros" (decisão do dono, 18/11). Em "outro", o campo raça guarda qual animal (ex.: Coelho) |
 | Quem anuncia | Só ONGs com CNPJ no MVP. Protetores independentes ficam para depois |
 | Cidade piloto | Ribeirão Preto (SP) |
 | Nome | Adotaí (provisório) |
@@ -140,6 +140,15 @@ Relatórios para ONGs, doações via Pix, equipe com papéis, moderação autom�
   limite de 30 mensagens/min e 5 pedidos/dia, buckets com 8 MB e só imagens. Cabeçalhos de segurança no `next.config`.
 - Divulgação: `/animais/[id]/opengraph-image` (prévia de link) e `/api/card/[id]?formato=feed|story|og&baixar=1`;
   kit Divulgar no painel do animal; botões de compartilhar na página do animal.
+
+## Links, carteirinha e admin (migration 12)
+
+- Link do anúncio: `/animais/<nome>-<code>` (`animals.code`, 6 caracteres, fixo). Monte sempre com `animalPath(a)` de `@adotai/shared`
+  (selecione `code` junto). Link antigo com uuid ou nome desatualizado redireciona para o atual.
+- `animals.vaccination_card_path`: foto da carteirinha (bucket animal-photos, `<ngo>/<animal>/vacina-*`), aparece no anúncio.
+- `adoption_request_events`: histórico de status de cada pedido (gatilho). Admin: `/admin/pedidos/[id]` (linha do tempo do pedido e da adoção)
+  e `/admin/usuarios/[id]` (ficha da pessoa via `admin_user_detail`, sem CPF).
+- Compartilhar manda só o link; a prévia com foto vem do `opengraph-image`.
 
 ## Idiomas (web)
 
