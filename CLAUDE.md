@@ -164,6 +164,14 @@ Relatórios para ONGs, doações via Pix, equipe com papéis, moderação autom�
 - Fotos são comprimidas no navegador antes do envio (`lib/image.ts`: máx. 1600 px, WebP) — anúncio, carteirinha (2000 px), chat, check-in.
 - Avisos novos (`notifications.kind`): term_accepted, review, report, foster, event.
 
+## SEO
+
+- `app/sitemap.ts` (animais disponíveis, ONGs, páginas locais; regenera a cada hora) e `app/robots.ts` (bloqueia painel, admin, conversas, conta).
+- Páginas locais `/adotar/<slug>` definidas em `LANDINGS` (`lib/site.ts`): cachorro, gato, filhotes e outros em Ribeirão Preto,
+  com FAQ e dados estruturados (FAQPage, BreadcrumbList). Links no rodapé. Animal: BreadcrumbList; ONG: schema `NGO`.
+- `SITE_URL` (`lib/site.ts`): `NEXT_PUBLIC_SITE_URL` → domínio de produção da Vercel → adotaiapp.vercel.app. Trocar quando houver domínio.
+- Ao virar multi-cidade (Fase D), gerar `LANDINGS` a partir da tabela de cidades.
+
 ## Plano noturno (19/11) — executar em ordem, um commit por bloco
 
 Regra de cada bloco: implementar → `tsc`/lint/i18n-check/build → testar no banco local → commit + push → migration em prod (scratchpad push.py).
@@ -172,8 +180,8 @@ Sem nada pago, sem conta nova, sem apagar dados de demonstração, sem mexer em 
 1. [x] Pós-adoção completo: aceite digital do termo (adotante), avaliação da ONG (após check-in de 30 dias), registrar devolução (ONG), check-ins 90/180 com foto
 2. [x] Denunciar (anúncio, ONG, conversa) e bloquear na conversa
 3. [x] Linha do tempo do pedido em Meus pedidos (eventos + próximo passo)
-4. [ ] SEO: sitemap.xml, robots.txt, dados estruturados, páginas "adotar cachorro/gato em Ribeirão Preto"
-5. [ ] Fotos comprimidas no envio (máx. 1600 px, WebP) — anúncio, carteirinha, chat, check-in
+4. [x] SEO: sitemap.xml, robots.txt, dados estruturados, páginas "adotar cachorro/gato em Ribeirão Preto"
+5. [x] Fotos comprimidas no envio (máx. 1600 px, WebP) — anúncio, carteirinha, chat, check-in
 6. [ ] ONG: filtro "esperando minha resposta", checklist de primeiro acesso, duplicar animal
 7. [ ] Recusado → animais parecidos; "Finais felizes" na página da ONG
 8. [ ] Compatibilidade adotante × animal no anúncio
