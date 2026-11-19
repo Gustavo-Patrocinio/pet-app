@@ -172,6 +172,22 @@ Relatórios para ONGs, doações via Pix, equipe com papéis, moderação autom�
 - `SITE_URL` (`lib/site.ts`): `NEXT_PUBLIC_SITE_URL` → domínio de produção da Vercel → adotaiapp.vercel.app. Trocar quando houver domínio.
 - Ao virar multi-cidade (Fase D), gerar `LANDINGS` a partir da tabela de cidades.
 
+## ONG, adotante e comunidade (migration 14)
+
+- Candidatos: aba "Esperando resposta" (pedido novo sem resposta ou conversa em que o adotante falou por último, mais antigo primeiro).
+- Visão geral da ONG: checklist de primeiro acesso (apresentação, horário, telefone, 3 animais, 3 fotos, Pix). Animal: botão "Duplicar" (rascunho sem fotos).
+- Pedido de adoção: compromisso de guarda responsável obrigatório (na web) + até 5 perguntas da ONG (`ngos.application_questions`);
+  tudo vai em `adoption_requests.answers` = `{compromisso_em, perguntas: [{pergunta, resposta}]}`. Perfil incompleto → completa → volta ao anúncio.
+  O app mobile ainda chama `request_adoption` sem isso (o banco não exige).
+- Compatibilidade: `compatibility(animal, perfil)` em `@adotai/shared` (sem porcentagem, de propósito). Aparece no anúncio para quem tem perfil de moradia.
+- Selo "Esperando há X meses" no cartão (publicado há 60+ dias); a ordenação "Esperando há mais tempo" já existia.
+- Recusado: Meus pedidos mostra até 3 animais parecidos. Página da ONG: "Finais felizes" (`ngo_happy_endings`, sem dados do adotante).
+- Feiras: `ngo_events` (ONG cadastra em /painel/feiras; público em /feiras, na página da ONG e numa faixa na busca).
+- Lar temporário: `foster_offers` (pessoa se oferece em /lar-temporario; ONG verificada vê em /painel/lar-temporario via `list_foster_offers`, contato por WhatsApp).
+- Pix: `lib/pix.ts` gera o BR Code estático (CRC conferido com o exemplo do Banco Central) e `DonatePix` mostra QR + copia e cola na ONG e no anúncio.
+- LGPD: /termos (rascunho), "Baixar meus dados" (`/api/meus-dados`, JSON pela sessão do usuário), aviso de cookies essenciais,
+  Política de Privacidade atualizada (celular visível no pedido, lar temporário, cookies, download).
+
 ## Plano noturno (19/11) — executar em ordem, um commit por bloco
 
 Regra de cada bloco: implementar → `tsc`/lint/i18n-check/build → testar no banco local → commit + push → migration em prod (scratchpad push.py).
@@ -182,19 +198,19 @@ Sem nada pago, sem conta nova, sem apagar dados de demonstração, sem mexer em 
 3. [x] Linha do tempo do pedido em Meus pedidos (eventos + próximo passo)
 4. [x] SEO: sitemap.xml, robots.txt, dados estruturados, páginas "adotar cachorro/gato em Ribeirão Preto"
 5. [x] Fotos comprimidas no envio (máx. 1600 px, WebP) — anúncio, carteirinha, chat, check-in
-6. [ ] ONG: filtro "esperando minha resposta", checklist de primeiro acesso, duplicar animal
-7. [ ] Recusado → animais parecidos; "Finais felizes" na página da ONG
-8. [ ] Compatibilidade adotante × animal no anúncio
-9. [ ] LGPD: Termos de Uso (rascunho), baixar meus dados (JSON), aviso de cookies essenciais
+6. [x] ONG: filtro "esperando minha resposta", checklist de primeiro acesso, duplicar animal
+7. [x] Recusado → animais parecidos; "Finais felizes" na página da ONG
+8. [x] Compatibilidade adotante × animal no anúncio
+9. [x] LGPD: Termos de Uso (rascunho), baixar meus dados (JSON), aviso de cookies essenciais
 10. [ ] CI no GitHub (tipos, lint, testes, traduções, build) + testes E2E (Playwright) dos fluxos principais
 11. [ ] PWA instalável (manifest + ícones)
 12. [ ] Admin: exportar CSV
-13. [ ] (pesquisa de concorrentes) Compromisso de guarda responsável marcado antes de enviar o pedido
-14. [ ] Selo/ordem "esperando há mais tempo" para animais parados (idosos, adultos)
-15. [ ] Perguntas extras da ONG no pedido (até 5)
-16. [ ] Feiras de adoção: ONG cadastra evento (data, local, animais); aparece na busca e na página da ONG
-17. [ ] Lar temporário: pessoa se oferece; ONG vê a lista na região
-18. [ ] Doação por Pix direto para a ONG (chave + QR gerado no site, sem intermediário)
+13. [x] (pesquisa de concorrentes) Compromisso de guarda responsável marcado antes de enviar o pedido
+14. [x] Selo/ordem "esperando há mais tempo" para animais parados (idosos, adultos)
+15. [x] Perguntas extras da ONG no pedido (até 5)
+16. [x] Feiras de adoção: ONG cadastra evento (data, local, animais); aparece na busca e na página da ONG
+17. [x] Lar temporário: pessoa se oferece; ONG vê a lista na região
+18. [x] Doação por Pix direto para a ONG (chave + QR gerado no site, sem intermediário)
 
 ## Idiomas (web)
 
