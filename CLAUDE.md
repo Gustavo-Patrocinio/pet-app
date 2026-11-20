@@ -117,7 +117,8 @@ Legenda: [x] feito · [~] em andamento · [ ] a fazer · 🔒 precisa do dono
 - [~] Notificações: avisos no site feitos; e-mail pronto mas desligado até 🔒 domínio + Resend; push (Expo) a fazer
 - [x] Denunciar (anúncio, ONG, avaliação, conversa) e bloquear na conversa — migration 13
 - [x] Testes E2E (Playwright) dos fluxos principais + CI no GitHub
-- [ ] 🔒 Revisão jurídica da Política de Privacidade e do Termo de adoção (rascunhos em /privacidade e /termo-de-adocao)
+- [x] Textos legais revisados sem advogado (decisão do dono, 19/11): /privacidade, /termos e Termo de adoção padrao-v2.
+      🔒 Falta o dono definir `NEXT_PUBLIC_OPERATOR_NAME` e `NEXT_PUBLIC_CONTACT_EMAIL` na Vercel (aparecem entre colchetes até lá).
 - [x] Decisão do dono: SEM provedor de SMS. Celular só é validado (formato BR: DDD + 9 dígitos começando com 9) — migration 07.
       ONG vê "CPF verificado · celular informado". phone_verified_at fica para quando houver SMS.
 - [x] ~~Chave de mapas~~ — decidido: mapa gratuito (MapLibre + OpenFreeMap), sem chave
@@ -221,6 +222,19 @@ Sem nada pago, sem conta nova, sem apagar dados de demonstração, sem mexer em 
 17. [x] Lar temporário: pessoa se oferece; ONG vê a lista na região
 18. [x] Doação por Pix direto para a ONG (chave + QR gerado no site, sem intermediário)
 
+## 404, guia das ONGs e textos legais (migration 15)
+
+- **Não recriar `app/loading.tsx` na raiz**: com ele, `notFound()`/redirect chegam por streaming (200 + meta tag). O esqueleto
+  (`components/page-skeleton.tsx`) fica em `loading.tsx` de cada seção; a busca está em `app/(busca)/` e a lista de ONGs em `ongs/(lista)/`.
+  Anúncio e ONG conferem a existência no `layout.tsx` (antes do loading) com `loadAnimal`/`loadNgo` (React `cache`). O E2E exige 404.
+- `/guia-ong`: passo a passo para mandar às ONGs convidadas (PT/EN no próprio arquivo; rodapé, /sou-ong e sitemap).
+- Textos legais: LGPD (bases legais, prestadores, transferência, direitos, prazo de 15 dias, canal de pequeno porte), Termos (licença de
+  conteúdo, moderação, Marco Civil, foro do usuário). Operador e e-mail vêm de `OPERATOR_NAME`/`CONTACT_EMAIL` (`lib/site.ts`).
+- Termo de adoção versionado: `TermClauses({ lang, version })`; a cópia mostra a versão que o adotante aceitou. **Nunca editar o texto de
+  uma versão publicada**: criar `padrao-v3` e mudar o default de `adoptions.term_version` numa migration.
+- `delete_my_account` também apaga a oferta de lar temporário de quem já adotou.
+- Páginas com PT e EN no mesmo arquivo levam o comentário `i18n-check: ignore-file`.
+
 ## Idiomas (web)
 
 - PT (padrão) e EN. Seletor PT | EN no rodapé e no perfil; a escolha fica no cookie `lang`.
@@ -259,7 +273,7 @@ node scripts/screenshots.mjs <animal-id>   # imagens do README (site rodando em 
 1. ~~Projeto Supabase~~ feito. Falta: configurar Auth no painel (Site URL / redirect URLs do domínio, confirmação de e-mail).
 2. ~~SMS~~ decidido: sem SMS, só validação do número.
    E-mail: colar `supabase/templates/confirmacao.html` em Authentication → Emails → Confirm signup; configurar SMTP próprio (Resend) antes de abrir ao público.
-3. Revisão jurídica: Política de Privacidade, Termo de adoção, e-mail do encarregado de dados (LGPD).
+3. ~~Revisão jurídica~~ decidido: sem advogado por enquanto. Falta: nome do responsável e e-mail de contato/privacidade (envs na Vercel).
 4. Deploy da web (sugestão: Vercel, plano gratuito) — precisa da conta dele.
 5. Contas de loja (Google Play US$ 25 único; Apple US$ 99/ano) quando o app mobile estiver pronto.
 6. Modelo de receita (em aberto; MVP gratuito).
